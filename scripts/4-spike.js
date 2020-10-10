@@ -4,18 +4,18 @@ import { sleep } from 'k6';
 export let options = {
   stages: [
     { duration: '10s', target: 100 }, // below normal load
-    { duration: '1m', target: 100 },
-    { duration: '10s', target: 1400 }, // spike to 1400 users
-    { duration: '3m', target: 1400 }, // stay at 1400 for 3 minutes
+    { duration: '10s', target: 100 },
+    { duration: '10s', target: 500 }, // spike to 1000 users
+    { duration: '10s', target: 500 }, // stay at 1000 for 30 minutes
     { duration: '10s', target: 100 }, // scale down. Recovery stage.
-    { duration: '3m', target: 100 },
+    { duration: '10s', target: 100 },
     { duration: '10s', target: 0 },
   ],
 };
 export default function () {
   const BASE_URL = 'https://test-api.k6.io'; // make sure this is not production
 
-  let responses = http.batch([
+  http.batch([
     [
       'GET',
       `${BASE_URL}/public/crocodiles/1/`,
